@@ -6,8 +6,7 @@
 //  Copyright (c) 2015 Mike Ash. All rights reserved.
 //
 
-import dispatch
-
+import Dispatch
 
 public class ObserverSetEntry<Parameters> {
     private weak var object: AnyObject?
@@ -20,7 +19,7 @@ public class ObserverSetEntry<Parameters> {
 }
 
 
-public class ObserverSet<Parameters>: Printable {
+public class ObserverSet<Parameters>: CustomStringConvertible {
     // Locking support
     
     private var queue = dispatch_queue_create("com.mikeash.ObserverSet", nil)
@@ -29,7 +28,6 @@ public class ObserverSet<Parameters>: Printable {
         dispatch_sync(queue, f)
     }
     
-    
     // Main implementation
     
     private var entries: [ObserverSetEntry<Parameters>] = []
@@ -37,7 +35,7 @@ public class ObserverSet<Parameters>: Printable {
     public init() {}
     
     public func add<T: AnyObject>(object: T, _ f: T -> Parameters -> Void) -> ObserverSetEntry<Parameters> {
-        let entry = ObserverSetEntry<Parameters>(object: object, f: { f($0 as T) })
+        let entry = ObserverSetEntry<Parameters>(object: object, f: { f($0 as! T) })
         synchronized {
             self.entries.append(entry)
         }
@@ -86,9 +84,9 @@ public class ObserverSet<Parameters>: Printable {
                 ? "\(entry.f)"
                 : "\(entry.object) \(entry.f)")
         }
-        let joined = ", ".join(strings)
+        let joined = strings.joinWithSeparator(", ")
         
-        return "\(reflect(self).summary): (\(joined))"
+        return "\(Mirror(reflecting: self)): (\(joined))"
     }
 }
 

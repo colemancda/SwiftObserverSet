@@ -41,31 +41,31 @@ class ObserverSetTests: XCTestCase {
         }
         
         deinit {
-            println("deinit!!!!")
+            print("deinit!!!!")
         }
         
         func voidSent() {
-            println("void sent")
+            print("void sent")
         }
         
         func stringChanged(s: String) {
-            println("stringChanged: " + s)
+            print("stringChanged: " + s)
         }
         
         func twoStringChanged(s1: String, s2: String) {
-            println("twoStringChanged: \(s1) \(s2)")
+            print("twoStringChanged: \(s1) \(s2)")
         }
         
         func intChanged(i: Int, j: Int) {
-            println("intChanged: \(i) \(j)")
+            print("intChanged: \(i) \(j)")
         }
         
         func intAndStringChanged(i: Int, s: String) {
-            println("intAndStringChanged: \(i) \(s)")
+            print("intAndStringChanged: \(i) \(s)")
         }
         
         func namedParameterSent(name: String, count: Int) {
-            println("Named parameters: \(name) \(count)")
+            print("Named parameters: \(name) \(count)")
         }
     }
     
